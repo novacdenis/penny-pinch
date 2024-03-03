@@ -17,10 +17,15 @@ export interface VisualizationProps {
   data: Trend[];
 }
 
-const margin = { top: 10, right: -2, bottom: -2, left: -2 };
-const height = 50;
-
 const Visualization: React.FC<VisualizationProps> = ({ width, data }) => {
+  const [height, setHeight] = React.useState(0);
+  const [margin, setMargin] = React.useState({
+    top: 5,
+    right: -2,
+    bottom: -2,
+    left: -2,
+  });
+
   const innerWidth = Math.max(width - margin.left - margin.right, 0);
   const innerHeight = Math.max(height - margin.top - margin.bottom, 0);
 
@@ -44,6 +49,26 @@ const Visualization: React.FC<VisualizationProps> = ({ width, data }) => {
 
   xScale.range([0, innerWidth]);
   yScale.range([innerHeight, 0]);
+
+  React.useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const onResize = () => {
+      setHeight(media.matches ? 30 : 50);
+      setMargin({
+        top: media.matches ? 5 : 10,
+        right: -2,
+        bottom: -2,
+        left: -2,
+      });
+    };
+
+    media.addEventListener("change", onResize);
+    onResize();
+
+    return () => {
+      media.removeEventListener("change", onResize);
+    };
+  }, []);
 
   return (
     <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
@@ -73,13 +98,13 @@ const Visualization: React.FC<VisualizationProps> = ({ width, data }) => {
   );
 };
 
-export interface MetricChartProps extends Omit<VisualizationProps, "width" | "height"> {}
+export interface MetricTrendProps extends Omit<VisualizationProps, "width" | "height"> {}
 
-export const MetricChart: React.FC<MetricChartProps> = ({ ...props }) => {
+export const MetricTrend: React.FC<MetricTrendProps> = ({ ...props }) => {
   return (
     <ParentSize
       debounceTime={10}
-      className="pointer-events-none absolute bottom-0 left-0 flex h-full w-full items-end overflow-hidden rounded-[inherit]"
+      className="trend pointer-events-none absolute bottom-0 left-0 flex items-end overflow-hidden rounded-[inherit]"
     >
       {({ width }) => <Visualization width={width} {...props} />}
     </ParentSize>

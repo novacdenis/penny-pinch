@@ -1,6 +1,13 @@
-import { Metric } from "@/components/shared/metric";
+import {
+  Metric,
+  MetricDelta,
+  MetricDescription,
+  MetricTitle,
+  MetricTrend,
+  MetricValue,
+} from "@/components/shared/metric";
 
-const data = [
+const _data = [
   {
     date: new Date("2021-01-01").getTime(),
     value: 500,
@@ -55,49 +62,45 @@ export default function DashboardPage() {
   return (
     <>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(275px,1fr))] gap-5">
-        <Metric
-          title="Total spent"
-          value="$1,000.00"
-          difference={5}
-          description="Compared to last month"
-          trend={data.map((d) => ({
-            timestamp: d.date,
-            amount: Math.random() > 0.5 ? 1000 : 500,
-          }))}
-        />
+        <Metric>
+          <MetricTitle>Total spent</MetricTitle>
+          <MetricValue>$1,000.00</MetricValue>
+          <MetricDelta delta="up">5%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend
+            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+          />
+        </Metric>
 
-        <Metric
-          title="Household bills"
-          value="$500.00"
-          difference={3.31}
-          description="Compared to last month"
-          trend={data.map((d) => ({
-            timestamp: d.date,
-            amount: Math.random() > 0.5 ? 500 : 600,
-          }))}
-        />
+        <Metric>
+          <MetricTitle>Household bills</MetricTitle>
+          <MetricValue>$500.00</MetricValue>
+          <MetricDelta delta="up">3.31%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend
+            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+          />
+        </Metric>
 
-        <Metric
-          title="Total transactions"
-          value="100"
-          difference={5}
-          description="Compared to last month"
-          trend={data.map((d) => ({
-            timestamp: d.date,
-            amount: Math.random() > 0.5 ? 100 : 200,
-          }))}
-        />
+        <Metric>
+          <MetricTitle>Total transactions</MetricTitle>
+          <MetricValue>100</MetricValue>
+          <MetricDelta delta="down">5%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend
+            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+          />
+        </Metric>
 
-        <Metric
-          title="Avg. transaction amount"
-          value="$10.00"
-          difference={10}
-          description="Compared to last month"
-          trend={data.map((d) => ({
-            timestamp: d.date,
-            amount: Math.random() > 0.5 ? 10 : 20,
-          }))}
-        />
+        <Metric>
+          <MetricTitle>Avg. transaction amount</MetricTitle>
+          <MetricValue>$10.00</MetricValue>
+          <MetricDelta delta="up">10%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend
+            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+          />
+        </Metric>
       </div>
     </>
   );
