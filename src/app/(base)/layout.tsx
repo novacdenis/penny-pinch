@@ -13,7 +13,7 @@ export default function BaseLayout({ children }: { children: React.ReactNode }) 
         </div>
       </header>
       <main>
-        <div className="container">{children}</div>
+        <div className="container py-5">{children}</div>
       </main>
     </>
   );

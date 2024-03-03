@@ -2,6 +2,10 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
   },
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
   "css.lint.unknownAtRules": "ignore",
-  "cSpell.words": ["clsx", "heroicons", "maib", "tailwindcss", "visx"]
+  "cSpell.words": ["clsx", "fontawesome", "fortawesome", "heroicons", "maib", "tailwindcss", "visx"]
 }

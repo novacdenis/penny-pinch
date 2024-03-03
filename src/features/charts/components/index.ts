@@ -1,1 +1,1 @@
-export { default as ExpenseChart } from "./expense-chart";
+export { default as ExpenseChart } from "./trend-chart";
