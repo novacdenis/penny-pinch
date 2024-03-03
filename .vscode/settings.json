@@ -3,5 +3,5 @@
     "source.fixAll": "explicit"
   },
   "css.lint.unknownAtRules": "ignore",
-  "cSpell.words": ["clsx", "tailwindcss", "visx"]
+  "cSpell.words": ["clsx", "heroicons", "maib", "tailwindcss", "visx"]
 }
