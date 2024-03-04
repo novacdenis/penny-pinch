@@ -2,12 +2,11 @@
 
 import * as React from "react";
 import {
-  faCaretDown,
-  faCheck,
-  faChevronDown,
-  faChevronUp,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpDownIcon,
+  ChevronUpIcon,
+} from "@heroicons/react/24/outline";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { cn } from "@/utils";
 
@@ -31,7 +30,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <FontAwesomeIcon icon={faCaretDown} className="h-4 w-4 opacity-50" />
+      <ChevronUpDownIcon className="h-4 w-4 opacity-50" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -46,7 +45,7 @@ const SelectScrollUpButton = React.forwardRef<
     className={cn("flex cursor-default items-center justify-center py-1", className)}
     {...props}
   >
-    <FontAwesomeIcon icon={faChevronUp} className="h-4 w-4 opacity-50" />
+    <ChevronUpIcon className="h-4 w-4 opacity-50" />
   </SelectPrimitive.ScrollUpButton>
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
@@ -60,7 +59,7 @@ const SelectScrollDownButton = React.forwardRef<
     className={cn("flex cursor-default items-center justify-center py-1", className)}
     {...props}
   >
-    <FontAwesomeIcon icon={faChevronDown} className="h-4 w-4 opacity-50" />
+    <ChevronDownIcon className="h-4 w-4 opacity-50" />
   </SelectPrimitive.ScrollDownButton>
 ));
 SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
@@ -122,7 +121,7 @@ const SelectItem = React.forwardRef<
     {...props}
   >
     <SelectPrimitive.ItemIndicator className="absolute right-2 top-1/2 flex -translate-y-1/2 items-center justify-center">
-      <FontAwesomeIcon icon={faCheck} className="h-4 w-4" />
+      <CheckIcon className="h-4 w-4" />
     </SelectPrimitive.ItemIndicator>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
