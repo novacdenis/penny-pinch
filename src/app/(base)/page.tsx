@@ -60,46 +60,57 @@ const _data = [
 
 export default function DashboardPage() {
   return (
-    <section className="container grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-      <Metric>
-        <MetricTitle>Total spent</MetricTitle>
-        <MetricValue>$1,000.00</MetricValue>
-        <MetricDelta delta="up">5%</MetricDelta>
-        <MetricDescription>Compared to last month</MetricDescription>
-        <MetricTrend
-          data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
-        />
-      </Metric>
+    <>
+      <section className="container grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <Metric>
+          <MetricTitle>Total spent</MetricTitle>
+          <MetricValue>$1,000.00</MetricValue>
+          <MetricDelta delta="up">5%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend
+            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+          />
+        </Metric>
 
-      <Metric>
-        <MetricTitle>Household bills</MetricTitle>
-        <MetricValue>$500.00</MetricValue>
-        <MetricDelta delta="up">3.31%</MetricDelta>
-        <MetricDescription>Compared to last month</MetricDescription>
-        <MetricTrend
-          data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
-        />
-      </Metric>
+        <Metric>
+          <MetricTitle>Household bills</MetricTitle>
+          <MetricValue>$500.00</MetricValue>
+          <MetricDelta delta="up">3.31%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend
+            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+          />
+        </Metric>
 
-      <Metric>
-        <MetricTitle>Total transactions</MetricTitle>
-        <MetricValue>100</MetricValue>
-        <MetricDelta delta="down">5%</MetricDelta>
-        <MetricDescription>Compared to last month</MetricDescription>
-        <MetricTrend
-          data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
-        />
-      </Metric>
+        <Metric>
+          <MetricTitle>Total transactions</MetricTitle>
+          <MetricValue>100</MetricValue>
+          <MetricDelta delta="down">5%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend
+            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+          />
+        </Metric>
 
-      <Metric>
-        <MetricTitle>Avg. transaction amount</MetricTitle>
-        <MetricValue>$10.00</MetricValue>
-        <MetricDelta delta="up">10%</MetricDelta>
-        <MetricDescription>Compared to last month</MetricDescription>
-        <MetricTrend
-          data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
-        />
-      </Metric>
-    </section>
+        <Metric>
+          <MetricTitle>Avg. transaction amount</MetricTitle>
+          <MetricValue>$10.00</MetricValue>
+          <MetricDelta delta="up">10%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend
+            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+          />
+        </Metric>
+      </section>
+
+      <section className="container mt-5">
+        <header>
+          <h2 className="font-semibold md:text-lg">Transactions</h2>
+          <p className="text-sm text-muted-foreground">
+            Here you can see all your transactions. You can filter them by date, category, and more.
+          </p>
+        </header>
+      </section>
+    </>
   );
 }
