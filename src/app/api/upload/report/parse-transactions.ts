@@ -6,6 +6,7 @@ interface Transaction {
   sumInLei: number;
   transactionCurrency: string;
   description: string;
+  transactionType: "SPENDING" | "INCOME";
 }
 
 const config = {
@@ -40,6 +41,7 @@ export function parseTransactions(htmlContent: string): Transaction[] {
         sumInLei: parseFloat(cells[4].text),
         transactionCurrency: extractCurrencyAndNumbers([cells[3].text])[0]?.currency || "",
         description: clearPatternFromString(cells[2].text.trim()),
+        transactionType: Number(cells[4].text) < 0 ? "SPENDING" : "INCOME",
       };
       transactions.push(transaction);
     } catch (e) {
