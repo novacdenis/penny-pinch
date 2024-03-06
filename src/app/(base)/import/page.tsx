@@ -1,5 +1,20 @@
 "use client";
 import { ChangeEvent, useState } from "react";
+import dayjs from "dayjs";
+import BaseChart, {
+  ReportData,
+  ReportEntityType,
+  TransactionPerTime,
+} from "@/app/(base)/import/BaseChart";
+import {
+  Metric,
+  MetricDelta,
+  MetricDescription,
+  MetricTitle,
+  MetricTrend,
+  MetricValue,
+  Trend,
+} from "@/components/shared/metric";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -31,6 +46,8 @@ const ReportImport = () => {
   // const acceptedFileTypes = ".html";
   const acceptedFileTypes = "*";
   const [file, setFile] = useState<FileOrNull>(null);
+  const [parsedData, setParsedData] = useState<ReportData>([]);
+  const [rerender, setRerender] = useState(1);
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -47,7 +64,7 @@ const ReportImport = () => {
     try {
       const formData = new FormData();
       formData.append("media", file);
-      console.log(formData);
+
       const res = await fetch("/api/upload/report", {
         method: "POST",
         body: formData,
@@ -57,9 +74,7 @@ const ReportImport = () => {
         data,
         error,
       }: {
-        data: {
-          url: string | string[];
-        } | null;
+        data: ReportData | null;
         error: string | null;
       } = await res.json();
 
@@ -69,7 +84,7 @@ const ReportImport = () => {
         return;
       }
 
-      console.log("File was uploaded successfylly:", data);
+      setParsedData(data);
     } catch (error) {
       console.error(error);
       console.log("Sorry! something went wrong.");
@@ -77,10 +92,70 @@ const ReportImport = () => {
   };
 
   return (
-    <section>
-      <Label htmlFor="report">Picture</Label>
-      <Input id="report" type="file" accept={acceptedFileTypes} onChange={handleFileChange} />
-      <Button onClick={processReport}>Process</Button>
-    </section>
+    <>
+      <button onClick={() => setRerender((prev) => prev + 1)}>rerender{rerender}</button>{" "}
+      <section>
+        <Label htmlFor="report">Picture</Label>
+        <Input id="report" type="file" accept={acceptedFileTypes} onChange={handleFileChange} />
+        <Button onClick={processReport}>Process</Button>
+      </section>
+      <section className="container grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+        <Metric>
+          <MetricTitle>Household bills</MetricTitle>
+          <MetricValue>$500.00</MetricValue>
+          <MetricDelta delta="up">3.31%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend data={parsedData.slice(0, 10).map(mapReportEntityTypeToTrend)} />
+        </Metric>
+        <Metric>
+          <MetricTitle>Household bills</MetricTitle>
+          <MetricValue>$500.00</MetricValue>
+          <MetricDelta delta="up">3.31%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend data={parsedData.slice(10, 30).map(mapReportEntityTypeToTrend)} />
+        </Metric>
+        <Metric>
+          <MetricTitle>Household bills</MetricTitle>
+          <MetricValue>$500.00</MetricValue>
+          <MetricDelta delta="up">3.31%</MetricDelta>
+          <MetricDescription>Compared to last month</MetricDescription>
+          <MetricTrend
+            data={formatNumberOfTransactions(parsedData).map(mapTransactionPerTimeToTrend)}
+          />
+        </Metric>
+      </section>
+      <section className="mt-10">
+        {parsedData.length > 0 && <BaseChart data={formatNumberOfTransactions(parsedData)} />}
+      </section>
+      <div className="mb-96"></div>
+      {JSON.stringify(parsedData, null, 2)}
+    </>
   );
+};
+
+const mapReportEntityTypeToTrend = (el: ReportEntityType): Trend => ({
+  timestamp: new Date(el.date).getTime(),
+  amount: Number(el.sum),
+});
+
+const mapTransactionPerTimeToTrend = ({
+  timestamp,
+  nrOfTransactions,
+}: TransactionPerTime): Trend => ({
+  timestamp,
+  amount: nrOfTransactions,
+});
+const toTimestamp = (date: string) => dayjs(date, "DD-MM-YYYY").valueOf();
+
+const formatNumberOfTransactions = (data: ReportData): TransactionPerTime[] => {
+  return data.reduce((acc: [] | TransactionPerTime[], value): TransactionPerTime[] => {
+    if (acc.find((el) => el?.timestamp === toTimestamp(value.date))) return acc;
+
+    const numberOfRepetition = data.filter((el) => el.date === value.date);
+
+    return [
+      ...acc,
+      { timestamp: toTimestamp(value.date), nrOfTransactions: numberOfRepetition.length },
+    ];
+  }, []);
 };

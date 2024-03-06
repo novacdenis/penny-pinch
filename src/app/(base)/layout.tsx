@@ -5,6 +5,7 @@ import {
   ArrowLeftStartOnRectangleIcon,
   Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
+import { ConfigLoader } from "@/app/(base)/ConfigLoader";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -18,6 +19,8 @@ import {
 export default function BaseLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <ConfigLoader />
+
       <header className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center">
           <Image
