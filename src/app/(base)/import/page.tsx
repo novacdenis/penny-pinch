@@ -6,6 +6,7 @@ import BaseChart, {
   ReportEntityType,
   TransactionPerTime,
 } from "@/app/(base)/import/BaseChart";
+import UploadData from "@/app/(base)/import/UploadData";
 import {
   Metric,
   MetricDelta,
@@ -43,11 +44,9 @@ export default function ImportPage() {
 
 export type FileOrNull = File | null;
 const ReportImport = () => {
-  // const acceptedFileTypes = ".html";
-  const acceptedFileTypes = "*";
+  const acceptedFileTypes = ".html";
   const [file, setFile] = useState<FileOrNull>(null);
   const [parsedData, setParsedData] = useState<ReportData>([]);
-  const [rerender, setRerender] = useState(1);
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -79,9 +78,7 @@ const ReportImport = () => {
       } = await res.json();
 
       if (error || !data) {
-        // alert(error || "Sorry! something went wrong.");
-        console.log(error || "Sorry! something went wrong.");
-        return;
+        throw new Error("Server error, or no data found.");
       }
 
       setParsedData(data);
@@ -93,11 +90,11 @@ const ReportImport = () => {
 
   return (
     <>
-      <button onClick={() => setRerender((prev) => prev + 1)}>rerender{rerender}</button>{" "}
       <section>
-        <Label htmlFor="report">Picture</Label>
+        <Label htmlFor="report">Upload report</Label>
         <Input id="report" type="file" accept={acceptedFileTypes} onChange={handleFileChange} />
         <Button onClick={processReport}>Process</Button>
+        <UploadData data={parsedData} />
       </section>
       <section className="container grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <Metric>

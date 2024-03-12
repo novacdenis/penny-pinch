@@ -57,12 +57,14 @@ export default function BaseLayout({ children }: { children: React.ReactNode }) 
               </DropdownMenuShortcut>
               <span className="ml-2">Settings</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <DropdownMenuShortcut className="ml-0">
-                <DocumentArrowUpIcon className="size-5" />
-              </DropdownMenuShortcut>
-              <span className="ml-2">Import</span>
-            </DropdownMenuItem>
+            <Link href="/import">
+              <DropdownMenuItem>
+                <DropdownMenuShortcut className="ml-0">
+                  <DocumentArrowUpIcon className="size-5" />
+                </DropdownMenuShortcut>
+                <span className="ml-2">Import</span>
+              </DropdownMenuItem>
+            </Link>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <DropdownMenuShortcut className="ml-0">
