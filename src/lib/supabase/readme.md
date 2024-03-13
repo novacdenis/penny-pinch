@@ -1,3 +1,21 @@
+# Generate Types 
+```
+supabase gen types typescript --project-id  npllrfkyfntjyvlpriis > ./lib/supabase/database.types.ts
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Helpful links
 https://github.com/orgs/supabase/discussions/13364
 
 My solution to that "problem" is the following helper types:
