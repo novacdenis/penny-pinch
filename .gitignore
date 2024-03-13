@@ -40,4 +40,4 @@ next-env.d.ts
 fullExtras.html
 
 
-.env
+/.env
