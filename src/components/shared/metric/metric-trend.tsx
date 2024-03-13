@@ -6,6 +6,7 @@ import { Group } from "@visx/group";
 import { ParentSize } from "@visx/responsive";
 import { scaleTime } from "@visx/scale";
 import { AreaClosed } from "@visx/shape";
+import { motion } from "framer-motion";
 
 export interface Trend {
   timestamp: number;
@@ -71,7 +72,17 @@ const Visualization: React.FC<VisualizationProps> = ({ width, data }) => {
   }, []);
 
   return (
-    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+    <motion.svg
+      initial={{
+        height: "0px",
+        width: `${width}px`,
+      }}
+      animate={{
+        height: `${height}px`,
+        width: `${width}px`,
+      }}
+      // viewBox={`0 0 ${width} ${height}`}
+    >
       <defs>
         <linearGradient id="area-gradient" x1="0" x2="0" y1="0" y2="1">
           <stop offset="0%" stopColor="#16a34a" stopOpacity={0.3} />
@@ -94,7 +105,7 @@ const Visualization: React.FC<VisualizationProps> = ({ width, data }) => {
           fill="url(#area-gradient)"
         />
       </Group>
-    </svg>
+    </motion.svg>
   );
 };
 

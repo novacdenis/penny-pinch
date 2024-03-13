@@ -6,3 +6,7 @@ export const timeConfig = () => {
   // @ts-expect-error
   dayjs.extend(customParseFormat);
 };
+
+export const timeFormats = {
+  dateMDY: "MM/DD/YYYY",
+};
