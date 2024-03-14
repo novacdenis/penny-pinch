@@ -10,7 +10,7 @@ import {
 } from "@/components/shared/metric";
 import { Section } from "@/components/ui/section";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ExpensesChart } from "@/features/monitoring/components/expenses-chart";
+import { ExpensesChart, TransactionsTable } from "@/features/monitoring";
 
 const _data = [
   { timestamp: new Date("2021-01-01").getTime() },
@@ -101,6 +101,29 @@ export default function DashboardPage() {
                 total: Object.values(d.categories).reduce((acc, curr) => acc + curr, 0),
                 ...d.categories,
               }))}
+          />
+        </div>
+      </section>
+
+      <section className="container mt-10">
+        <header className="flex h-12 items-center justify-between">
+          <h2 className="flex-1 font-medium md:text-lg">Transactions</h2>
+        </header>
+        <div className="mt-5">
+          <TransactionsTable
+            data={_data.map((d) => ({
+              id: faker.string.uuid(),
+              timestamp: d.timestamp,
+              title: faker.lorem.words(3),
+              category: faker.helpers.arrayElement([
+                "household",
+                "transport",
+                "food",
+                "utilities",
+                "other",
+              ]),
+              amount: faker.number.float({ min: 10, max: 1000, fractionDigits: 2 }),
+            }))}
           />
         </div>
       </section>

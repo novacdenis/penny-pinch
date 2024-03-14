@@ -1,6 +1,6 @@
 "use client";
 
-import type { Expense, ExpenseCategory } from "../types";
+import type { Expense } from "../types";
 import React from "react";
 import { AxisLeft, AxisBottom } from "@visx/axis";
 import { Group } from "@visx/group";
@@ -55,7 +55,7 @@ const Visualization: React.FC<VisualizationProps> = ({ width, height, data }) =>
   yScale.range([innerHeight, 0]);
 
   const colorScale = React.useMemo(() => {
-    return scaleOrdinal<ExpenseCategory, string>({
+    return scaleOrdinal<string, string>({
       domain: ["household", "transport", "food", "utilities", "other"],
       range: ["#f56565", "#68d391", "#ecc94b", "#4299e1", "#9f7aea"],
     });
@@ -104,7 +104,7 @@ const Visualization: React.FC<VisualizationProps> = ({ width, height, data }) =>
       </defs>
       <Group left={margin.left} top={margin.top}>
         <Group className="bars">
-          <BarStack<Expense, ExpenseCategory>
+          <BarStack<Expense, string>
             data={data}
             keys={["household", "transport", "food", "utilities", "other"]}
             x={(d) => d.timestamp}

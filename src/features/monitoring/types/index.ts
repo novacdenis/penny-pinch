@@ -1,5 +1,3 @@
-export type ExpenseCategory = "household" | "transport" | "food" | "utilities" | "other";
-
 export interface Expense {
   timestamp: number;
   household: number;
@@ -8,4 +6,14 @@ export interface Expense {
   utilities: number;
   other: number;
   total: number;
+}
+
+export type TransactionCategory = "household" | "transport" | "food" | "utilities" | "other";
+
+export interface Transaction {
+  id: string;
+  title: string;
+  category: TransactionCategory;
+  amount: number;
+  timestamp: number;
 }
