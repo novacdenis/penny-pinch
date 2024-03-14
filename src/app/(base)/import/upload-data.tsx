@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import dayjs from "dayjs";
-import { ReportData } from "@/app/(base)/import/BaseChart";
+import { ReportData } from "@/app/(base)/import/base-chart";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 import { Database } from "@/lib/supabase/database.types";

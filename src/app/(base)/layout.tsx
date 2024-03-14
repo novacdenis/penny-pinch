@@ -6,7 +6,7 @@ import {
   Cog6ToothIcon,
   KeyIcon,
 } from "@heroicons/react/24/outline";
-import { ConfigLoader } from "@/app/(base)/ConfigLoader";
+import { ConfigLoader } from "@/app/(base)/config-loader";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {

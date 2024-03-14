@@ -5,8 +5,8 @@ import BaseChart, {
   ReportData,
   ReportEntityType,
   TransactionPerTime,
-} from "@/app/(base)/import/BaseChart";
-import UploadData from "@/app/(base)/import/UploadData";
+} from "@/app/(base)/import/base-chart";
+import UploadData from "@/app/(base)/import/upload-data";
 import {
   Metric,
   MetricDelta,
