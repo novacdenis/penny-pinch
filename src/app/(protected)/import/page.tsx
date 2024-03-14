@@ -1,12 +1,7 @@
 "use client";
+import type { ReportData, ReportEntityType, TransactionPerTime } from "./base-chart";
 import { ChangeEvent, useState } from "react";
 import dayjs from "dayjs";
-import BaseChart, {
-  ReportData,
-  ReportEntityType,
-  TransactionPerTime,
-} from "@/app/(base)/import/base-chart";
-import UploadData from "@/app/(base)/import/upload-data";
 import {
   Metric,
   MetricDelta,
@@ -20,6 +15,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import BaseChart from "./base-chart";
+import UploadData from "./upload-data";
 
 export default function ImportPage() {
   return (

@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import {
   DocumentArrowUpIcon,
   ArrowLeftStartOnRectangleIcon,
   Cog6ToothIcon,
   KeyIcon,
 } from "@heroicons/react/24/outline";
-import { ConfigLoader } from "@/app/(base)/config-loader";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,13 +17,17 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { handleGithubLogin, handleGoogleLogin, handleLogout } from "@/lib/auth/actions";
-import { auth } from "@/lib/auth/index";
+import { auth, handleGithubLogin, handleGoogleLogin, handleLogout } from "@/features/auth";
+import { ConfigLoader } from "./config-loader";
 
 export default async function BaseLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
   const image = session?.user?.image || null;
   const name = session?.user?.name || "Error loading name.";
+
+  if (!session) {
+    redirect("/");
+  }
 
   return (
     <>

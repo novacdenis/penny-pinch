@@ -1,6 +1,5 @@
 import React from "react";
 import { faker } from "@faker-js/faker";
-import { FunnelIcon } from "@heroicons/react/24/outline";
 import {
   Metric,
   MetricDelta,
@@ -9,30 +8,9 @@ import {
   MetricTrend,
   MetricValue,
 } from "@/components/shared/metric";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  Section,
-  SectionContent,
-  SectionDescription,
-  SectionHeader,
-  SectionTitle,
-} from "@/components/ui/section";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Section } from "@/components/ui/section";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ExpensesChart } from "@/features/monitoring";
+import { ExpensesChart } from "@/features/monitoring/components/expenses-chart";
 
 const _data = [
   { timestamp: new Date("2021-01-01").getTime() },
