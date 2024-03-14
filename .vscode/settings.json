@@ -7,5 +7,14 @@
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
   "css.lint.unknownAtRules": "ignore",
-  "cSpell.words": ["clsx", "fontawesome", "fortawesome", "heroicons", "maib", "tailwindcss", "visx"]
+  "cSpell.words": [
+    "clsx",
+    "fontawesome",
+    "fortawesome",
+    "heroicons",
+    "maib",
+    "supabase",
+    "tailwindcss",
+    "visx"
+  ]
 }
