@@ -53,7 +53,7 @@ export default async function BaseLayout({ children }: { children: React.ReactNo
             <DropdownMenuTrigger asChild>
               <button className="flex items-center rounded-full bg-primary/5 p-1 transition-colors active:bg-primary/10 md:hover:bg-primary/10">
                 <Avatar className="size-8">
-                  {image && <AvatarImage src={image} />}
+                  {image && <AvatarImage src={image} referrerPolicy="no-referrer" />}
                   <AvatarFallback className="text-xs">AV</AvatarFallback>
                 </Avatar>
                 <span className="px-4 text-sm font-medium">Hi, {name}</span>
