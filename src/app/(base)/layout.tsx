@@ -70,7 +70,7 @@ export default function BaseLayout({ children }: { children: React.ReactNode }) 
           </DropdownMenuContent>
         </DropdownMenu>
       </header>
-      <main className="py-5">{children}</main>
+      <main className="my-1.5 py-5">{children}</main>
     </>
   );
 }

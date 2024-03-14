@@ -4,15 +4,16 @@ import React from "react";
 import { curveMonotoneX } from "@visx/curve";
 import { Group } from "@visx/group";
 import { ParentSize } from "@visx/responsive";
-import { scaleTime } from "@visx/scale";
+import { scaleLinear, scaleTime } from "@visx/scale";
 import { AreaClosed } from "@visx/shape";
+import { motion } from "framer-motion";
 
 export interface Trend {
   timestamp: number;
   amount: number;
 }
 
-export interface VisualizationProps {
+interface VisualizationProps {
   width: number;
   data: Trend[];
 }
@@ -42,7 +43,7 @@ const Visualization: React.FC<VisualizationProps> = ({ width, data }) => {
     const min = Math.min(...data.map((h) => h.amount));
     const max = Math.max(...data.map((h) => h.amount));
 
-    return scaleTime<number>({
+    return scaleLinear<number>({
       domain: [min, max],
     });
   }, [data]);
@@ -71,13 +72,19 @@ const Visualization: React.FC<VisualizationProps> = ({ width, data }) => {
   }, []);
 
   return (
-    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+    <motion.svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      initial={{ y: 10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+    >
       <defs>
-        <linearGradient id="area-gradient" x1="0" x2="0" y1="0" y2="1">
+        <linearGradient id="trend-area-gradient" x1="0" x2="0" y1="0" y2="1">
           <stop offset="0%" stopColor="#16a34a" stopOpacity={0.3} />
           <stop offset="100%" stopColor="#16a34a" stopOpacity={0} />
         </linearGradient>
-        <linearGradient id="line-gradient" x1="0" x2="0" y1="0" y2="1">
+        <linearGradient id="trend-line-gradient" x1="0" x2="0" y1="0" y2="1">
           <stop offset="0%" stopColor="#16a34a" stopOpacity={1} />
           <stop offset="100%" stopColor="#16a34a" stopOpacity={0} />
         </linearGradient>
@@ -90,15 +97,15 @@ const Visualization: React.FC<VisualizationProps> = ({ width, data }) => {
           y={(d) => yScale(d.amount)}
           yScale={yScale}
           strokeWidth={2}
-          stroke="url(#line-gradient)"
-          fill="url(#area-gradient)"
+          stroke="url(#trend-line-gradient)"
+          fill="url(#trend-area-gradient)"
         />
       </Group>
-    </svg>
+    </motion.svg>
   );
 };
 
-export interface MetricTrendProps extends Omit<VisualizationProps, "width" | "height"> {}
+export interface MetricTrendProps extends Omit<VisualizationProps, "width"> {}
 
 export const MetricTrend: React.FC<MetricTrendProps> = ({ ...props }) => {
   return (

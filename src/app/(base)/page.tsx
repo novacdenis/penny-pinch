@@ -1,4 +1,6 @@
-import type { TransactionType } from "@/features/transactions";
+import React from "react";
+import { faker } from "@faker-js/faker";
+import { FunnelIcon } from "@heroicons/react/24/outline";
 import {
   Metric,
   MetricDelta,
@@ -7,128 +9,57 @@ import {
   MetricTrend,
   MetricValue,
 } from "@/components/shared/metric";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Section,
+  SectionContent,
+  SectionDescription,
+  SectionHeader,
+  SectionTitle,
+} from "@/components/ui/section";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ExpensesChart } from "@/features/monitoring";
 
 const _data = [
-  {
-    date: new Date("2021-01-01").getTime(),
-    value: 500,
-  },
-  {
-    date: new Date("2021-02-01").getTime(),
-    value: 600,
-  },
-  {
-    date: new Date("2021-03-01").getTime(),
-    value: 600,
-  },
-  {
-    date: new Date("2021-04-01").getTime(),
-    value: 600,
-  },
-  {
-    date: new Date("2021-05-01").getTime(),
-    value: 700,
-  },
-  {
-    date: new Date("2021-06-01").getTime(),
-    value: 700,
-  },
-  {
-    date: new Date("2021-07-01").getTime(),
-    value: 600,
-  },
-  {
-    date: new Date("2021-08-01").getTime(),
-    value: 1000,
-  },
-  {
-    date: new Date("2021-09-01").getTime(),
-    value: 700,
-  },
-  {
-    date: new Date("2021-10-01").getTime(),
-    value: 600,
-  },
-  {
-    date: new Date("2021-11-01").getTime(),
-    value: 500,
-  },
-  {
-    date: new Date("2021-12-01").getTime(),
-    value: 500,
-  },
-];
-
-const _transactions: TransactionType[] = [
-  {
-    id: 1,
-    title: "Lunch",
-    amount: 100,
-    category: "groceries",
-    timestamp: new Date("2021-01-01").toISOString(),
-  },
-  {
-    id: 2,
-    title: "Electricity bill",
-    amount: 200,
-    category: "bills-and-utilities",
-    timestamp: new Date("2021-01-02").toISOString(),
-  },
-  {
-    id: 3,
-    amount: 300,
-    title: "Taxi",
-    category: "transportation",
-    timestamp: new Date("2021-01-03").toISOString(),
-  },
-  {
-    id: 4,
-    title: "Shoes",
-    amount: 400,
-    category: "shopping",
-    timestamp: new Date("2021-01-04").toISOString(),
-  },
-  {
-    id: 5,
-    amount: 500,
-    title: "Netflix",
-    category: "entertainment",
-    timestamp: new Date("2021-01-05").toISOString(),
-  },
-  {
-    id: 6,
-    amount: 600,
-    title: "Gym",
-    category: "health-and-fitness",
-    timestamp: new Date("2021-01-06").toISOString(),
-  },
-  {
-    id: 7,
-    amount: 700,
-    title: "Flight",
-    category: "travel",
-    timestamp: new Date("2021-01-07").toISOString(),
-  },
-  {
-    id: 8,
-    amount: 800,
-    title: "Books",
-    category: "education",
-    timestamp: new Date("2021-01-08").toISOString(),
-  },
+  { timestamp: new Date("2021-01-01").getTime() },
+  { timestamp: new Date("2021-02-01").getTime() },
+  { timestamp: new Date("2021-03-01").getTime() },
+  { timestamp: new Date("2021-04-01").getTime() },
+  { timestamp: new Date("2021-05-01").getTime() },
+  { timestamp: new Date("2021-06-01").getTime() },
+  { timestamp: new Date("2021-07-01").getTime() },
+  { timestamp: new Date("2021-08-01").getTime() },
+  { timestamp: new Date("2021-09-01").getTime() },
+  { timestamp: new Date("2021-10-01").getTime() },
+  { timestamp: new Date("2021-11-01").getTime() },
+  { timestamp: new Date("2021-12-01").getTime() },
 ];
 
 export default function DashboardPage() {
   return (
     <>
-      <section className="container grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      <Section className="container mt-0 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <Metric>
           <MetricTitle>Total spent</MetricTitle>
           <MetricValue>$1,000.00</MetricValue>
           <MetricDelta delta="up">5%</MetricDelta>
           <MetricDescription>Compared to last month</MetricDescription>
           <MetricTrend
-            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+            data={_data.map((d) => ({ timestamp: d.timestamp, amount: Math.random() * 1000 }))}
           />
         </Metric>
 
@@ -138,7 +69,7 @@ export default function DashboardPage() {
           <MetricDelta delta="up">3.31%</MetricDelta>
           <MetricDescription>Compared to last month</MetricDescription>
           <MetricTrend
-            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+            data={_data.map((d) => ({ timestamp: d.timestamp, amount: Math.random() * 1000 }))}
           />
         </Metric>
 
@@ -148,7 +79,7 @@ export default function DashboardPage() {
           <MetricDelta delta="down">5%</MetricDelta>
           <MetricDescription>Compared to last month</MetricDescription>
           <MetricTrend
-            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+            data={_data.map((d) => ({ timestamp: d.timestamp, amount: Math.random() * 1000 }))}
           />
         </Metric>
 
@@ -158,24 +89,41 @@ export default function DashboardPage() {
           <MetricDelta delta="up">10%</MetricDelta>
           <MetricDescription>Compared to last month</MetricDescription>
           <MetricTrend
-            data={_data.map((d) => ({ timestamp: d.date, amount: Math.random() * 1000 }))}
+            data={_data.map((d) => ({ timestamp: d.timestamp, amount: Math.random() * 1000 }))}
           />
         </Metric>
-      </section>
+      </Section>
 
       <section className="container mt-10">
-        <header>
-          <h2 className="font-semibold md:text-lg">Transactions</h2>
-          <p className="text-sm text-muted-foreground">
-            Here you can see all your transactions. You can filter them by date, category, and more.
-          </p>
+        <header className="flex h-12 items-center justify-between">
+          <h2 className="flex-1 font-medium md:text-lg">Expenses</h2>
+          <Tabs defaultValue="1y">
+            <TabsList className="h-8">
+              <TabsTrigger value="3m">3M</TabsTrigger>
+              <TabsTrigger value="6m">6M</TabsTrigger>
+              <TabsTrigger value="1y">1Y</TabsTrigger>
+            </TabsList>
+          </Tabs>
         </header>
-        <div className="mt-5 flex flex-col space-y-5">
-          <ul>
-            <li className="flex items-center">
-              <button className="flex h-10 w-10 items-center justify-center rounded-2xl bg-green-600/20 text-green-600"></button>
-            </li>
-          </ul>
+        <div className="mt-5 h-96">
+          <ExpensesChart
+            data={_data
+              .map((d) => ({
+                timestamp: d.timestamp,
+                categories: {
+                  household: faker.number.int({ min: 200, max: 1000 }),
+                  transport: faker.number.int({ min: 200, max: 1000 }),
+                  food: faker.number.int({ min: 200, max: 1000 }),
+                  utilities: faker.number.int({ min: 200, max: 1000 }),
+                  other: faker.number.int({ min: 200, max: 1000 }),
+                },
+              }))
+              .map((d) => ({
+                timestamp: d.timestamp,
+                total: Object.values(d.categories).reduce((acc, curr) => acc + curr, 0),
+                ...d.categories,
+              }))}
+          />
         </div>
       </section>
     </>

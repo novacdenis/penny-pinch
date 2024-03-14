@@ -1,0 +1,17 @@
+.axisLine,
+.tickLine {
+  stroke: hsl(var(--muted-foreground));
+}
+
+.tickLabel {
+  font-family: var(--font-geist-sans);
+  font-size: 0.75rem; /* 12px */
+  font-weight: 500;
+  fill: hsl(var(--muted-foreground));
+}
+
+@media screen and (min-width: 768px) {
+  .tickLabel {
+    font-size: 0.875rem; /* 14px */
+  }
+}
