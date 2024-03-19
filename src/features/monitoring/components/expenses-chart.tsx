@@ -141,7 +141,11 @@ const Visualization: React.FC<VisualizationProps> = ({ width, height, data }) =>
             top={innerHeight}
             axisLineClassName={styles.axisLine}
             tickLineProps={{ className: styles.tickLine }}
-            tickFormat={(value) => dateFormatter.format(value.valueOf())}
+            tickFormat={(value) =>
+              Intl.DateTimeFormat("ro-MD", { month: "short", day: "2-digit" }).format(
+                value.valueOf()
+              )
+            }
             tickComponent={({ formattedValue, ...rest }) => (
               <Text {...rest} className={styles.tickLabel}>
                 {formattedValue}
