@@ -8,12 +8,10 @@ export interface Expense {
   total: number;
 }
 
-export type TransactionCategory = "household" | "transport" | "food" | "utilities" | "other";
-
 export interface Transaction {
   id: string;
   title: string;
-  category: TransactionCategory;
+  category: string;
   amount: number;
   timestamp: number;
 }

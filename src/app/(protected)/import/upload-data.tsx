@@ -4,9 +4,9 @@ import type { ReportData } from "./base-chart";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/client";
-import { Database } from "@/lib/supabase/database.types";
 import { timeFormats } from "@/utils/time-config";
+import { createClient } from "../../../../supabase/client";
+import { Database } from "../../../../supabase/database.types";
 
 export interface IUploadDataProps {
   data: ReportData;

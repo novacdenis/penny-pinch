@@ -5,12 +5,16 @@ import { Bar } from "@visx/shape";
 
 const verticalMargin = 120;
 export interface ReportEntityType {
-  date: string;
-  sum: number;
-  sumInLei: number;
-  transactionCurrency: string;
-  description: string;
-  transactionType: string;
+  category_id: number | null;
+  created_at: string;
+  date: string | null;
+  description: string | null;
+  id: number;
+  sum: number | null;
+  sumInLei: number | null;
+  transactionCurrency: string | null;
+  transactionType: string | null;
+  user_id: string | null;
 }
 
 export type ReportData = ReportEntityType[];

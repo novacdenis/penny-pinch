@@ -1,5 +1,5 @@
 import React from "react";
-import { faker } from "@faker-js/faker";
+import { getDashboardData } from "@/app/(protected)/dashboard/action";
 import {
   Metric,
   MetricDelta,
@@ -10,7 +10,8 @@ import {
 } from "@/components/shared/metric";
 import { Section } from "@/components/ui/section";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ExpensesChart, TransactionsTable } from "@/features/monitoring";
+import { ExpensesChart, Transaction, TransactionsTable } from "@/features/monitoring";
+import { Tables } from "../../../../supabase/database.types";
 
 const _data = [
   { timestamp: new Date("2021-01-01").getTime() },
@@ -27,7 +28,94 @@ const _data = [
   { timestamp: new Date("2021-12-01").getTime() },
 ];
 
-export default function DashboardPage() {
+type TransactionsTable = Tables<"transactions">;
+type CategoriesTable = Tables<"categories">;
+type TransactionsWithCategories = TransactionsTable & {
+  categories: Pick<CategoriesTable, "name"> | null;
+};
+
+function transformToTableData(data: TransactionsWithCategories[]): Transaction[] {
+  return data.map(({ id, description, categories, sumInLei, date }) => ({
+    id: id.toString(),
+    timestamp: Number(date),
+    title: description ? description : "-",
+    category: categories?.name || "-",
+    amount: sumInLei,
+  }));
+}
+
+/*name if : "Beauty"|
+"Bills & Fees"|
+"Car"|
+"Education"|
+"Entertainment"|
+"Family & Personal"|
+"Food & Drink"|
+"Gifts"|
+"Groceries"|
+"Healthcare"|
+"Home"|
+"Shopping"|
+"Sport & Hobby"|
+"Transport"|
+"Travel"|
+"Work"*/
+function transformToExpensesChartData(
+  data: TransactionsWithCategories[]
+): { timestamp: number; [key: string]: number }[] {
+  const expenses: { timestamp: number; [key: string]: number }[] = [];
+  data.forEach(({ date, categories }) => {
+    let household = 0;
+    let transport = 0;
+    let food = 0;
+    let utilities = 0;
+    let other = 0;
+    let total = 0;
+    data.forEach((d) => {
+      if (date !== d.date) return;
+      const sumInLei = Math.abs(d.sumInLei);
+
+      switch (categories?.name) {
+        case "Bills & Fees":
+          household += sumInLei;
+          break;
+        case "Car":
+          transport += sumInLei;
+          break;
+        case "Groceries":
+          food += sumInLei;
+          break;
+        case "Home":
+          utilities += sumInLei;
+          break;
+        default:
+          other += sumInLei;
+          break;
+      }
+      console.log(categories?.name, "categories", categories?.name === "Groceries", { food });
+
+      total += sumInLei;
+    });
+    expenses.push({
+      timestamp: new Date(date).valueOf(),
+      household,
+      transport,
+      food,
+      utilities,
+      other,
+      total,
+    });
+  });
+  console.log(
+    expenses.find((t) => t.food > 0),
+    "expenses"
+  );
+  return expenses;
+}
+export default async function DashboardPage() {
+  const data = await getDashboardData();
+  const tableData = transformToTableData(data);
+  const expensesChartData = transformToExpensesChartData(data);
   return (
     <>
       <Section className="container mt-0 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
@@ -84,24 +172,7 @@ export default function DashboardPage() {
           </Tabs>
         </header>
         <div className="mt-5 h-96">
-          <ExpensesChart
-            data={_data
-              .map((d) => ({
-                timestamp: d.timestamp,
-                categories: {
-                  household: faker.number.int({ min: 200, max: 1000 }),
-                  transport: faker.number.int({ min: 200, max: 1000 }),
-                  food: faker.number.int({ min: 200, max: 1000 }),
-                  utilities: faker.number.int({ min: 200, max: 1000 }),
-                  other: faker.number.int({ min: 200, max: 1000 }),
-                },
-              }))
-              .map((d) => ({
-                timestamp: d.timestamp,
-                total: Object.values(d.categories).reduce((acc, curr) => acc + curr, 0),
-                ...d.categories,
-              }))}
-          />
+          <ExpensesChart data={expensesChartData} />
         </div>
       </section>
 
@@ -110,21 +181,7 @@ export default function DashboardPage() {
           <h2 className="flex-1 font-medium md:text-lg">Transactions</h2>
         </header>
         <div className="mt-5">
-          <TransactionsTable
-            data={_data.map((d) => ({
-              id: faker.string.uuid(),
-              timestamp: d.timestamp,
-              title: faker.lorem.words(3),
-              category: faker.helpers.arrayElement([
-                "household",
-                "transport",
-                "food",
-                "utilities",
-                "other",
-              ]),
-              amount: faker.number.float({ min: 10, max: 1000, fractionDigits: 2 }),
-            }))}
-          />
+          <TransactionsTable data={tableData} />
         </div>
       </section>
     </>

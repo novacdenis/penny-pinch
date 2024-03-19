@@ -4,7 +4,8 @@ supabase gen types typescript --project-id  npllrfkyfntjyvlpriis > ./lib/supabas
 ```
 
 
-
+# types infer
+https://www.ziadmtl.dev/blog/using-supabase-with-typescript
 
 
 
