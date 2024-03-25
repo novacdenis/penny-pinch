@@ -6,7 +6,10 @@ import { cn } from "@/utils";
 import "@/styles/index.css";
 
 export const metadata: Metadata = {
-  title: "PennyPinch",
+  title: {
+    template: "%s | PennyPinch",
+    default: "PennyPinch",
+  },
   description: "PennyPinch: Track your spending and take control of your finances.",
 };
 
