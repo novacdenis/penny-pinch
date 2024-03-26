@@ -4,6 +4,9 @@ const nextConfig = {
     fetches: {
       fullUrl: true,
     },
-  },};
-
+  },
+  experimental: {
+    instrumentationHook: true,
+  }
+};
 export default nextConfig;

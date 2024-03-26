@@ -22,7 +22,6 @@ export default async function HomePage() {
   const session = await auth();
   const image = session?.user?.image || null;
   const name = session?.user?.name || "Error loading name.";
-
   return (
     <>
       <header className="container flex h-16 items-center justify-between">
