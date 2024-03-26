@@ -1,4 +1,5 @@
 import React from "react";
+import dayjs from "dayjs";
 import { getDashboardData } from "@/app/(protected)/dashboard/action";
 import {
   Metric,
@@ -37,7 +38,7 @@ type TransactionsWithCategories = TransactionsTable & {
 function transformToTableData(data: TransactionsWithCategories[]): Transaction[] {
   return data.map(({ id, description, categories, sumInLei, date }) => ({
     id: id.toString(),
-    timestamp: Number(date),
+    timestamp: dayjs(date).valueOf(),
     title: description ? description : "-",
     category: categories?.name || "-",
     amount: sumInLei,
